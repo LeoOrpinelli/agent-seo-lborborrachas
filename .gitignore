@@ -1,0 +1,19 @@
+# HTML cache files (fetched pages)
+*.html
+catpage_*.html
+homepage_*.html
+lbor_*.html
+
+# Screenshots cache
+screenshots/
+claude-seo/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
