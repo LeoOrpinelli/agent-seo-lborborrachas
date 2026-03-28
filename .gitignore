@@ -1,5 +1,7 @@
 # HTML cache files (fetched pages)
-*.html
+catpage_*.html
+homepage_*.html
+lbor_*.html
 catpage_*.html
 homepage_*.html
 lbor_*.html

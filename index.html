@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatório SEO — LBorborrachas</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8fafc; color: #1e293b; }
+
+    header {
+      background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+      color: white;
+      padding: 48px 24px 40px;
+      text-align: center;
+    }
+    header .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+    }
+    header h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+    header p { font-size: 16px; opacity: 0.85; }
+
+    .container { max-width: 860px; margin: 0 auto; padding: 48px 24px; }
+
+    .score-card {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .score-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: conic-gradient(#ef4444 0% 39%, #e2e8f0 39% 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .score-circle::before {
+      content: '';
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      background: white;
+      position: absolute;
+    }
+    .score-circle span {
+      position: relative;
+      font-size: 26px;
+      font-weight: 800;
+      color: #ef4444;
+    }
+    .score-info h2 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+    .score-info p { font-size: 14px; color: #64748b; line-height: 1.6; }
+    .score-info .proj {
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #f0fdf4;
+      color: #16a34a;
+      border: 1px solid #bbf7d0;
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #94a3b8;
+      margin-bottom: 16px;
+    }
+
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+    @media (max-width: 600px) { .cards { grid-template-columns: 1fr; } .score-card { flex-direction: column; text-align: center; } }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.03);
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid #f1f5f9;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .card:hover { box-shadow: 0 4px 20px rgba(37,99,235,0.12); transform: translateY(-2px); }
+    .card-icon { font-size: 28px; margin-bottom: 12px; }
+    .card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .card p { font-size: 13px; color: #64748b; line-height: 1.5; }
+    .card .tag {
+      margin-top: 12px;
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #eff6ff;
+      color: #2563eb;
+    }
+    .card.pdf .tag { background: #fff7ed; color: #ea580c; }
+
+    .issues {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      margin-bottom: 32px;
+      border: 1px solid #f1f5f9;
+    }
+    .issue-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .issue-item:last-child { border-bottom: none; }
+    .issue-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .issue-dot.crit { background: #ef4444; }
+    .issue-dot.high { background: #f97316; }
+    .issue-dot.med  { background: #eab308; }
+    .issue-text { font-size: 14px; color: #334155; line-height: 1.5; }
+    .issue-text strong { display: block; font-weight: 600; margin-bottom: 2px; }
+
+    .competitors {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      margin-bottom: 32px;
+      border: 1px solid #f1f5f9;
+    }
+    .comp-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f8fafc;
+    }
+    .comp-row:last-child { border-bottom: none; }
+    .comp-name { font-size: 13px; font-weight: 600; width: 120px; flex-shrink: 0; }
+    .comp-bar-bg { flex: 1; height: 8px; background: #f1f5f9; border-radius: 4px; overflow: hidden; }
+    .comp-bar { height: 100%; border-radius: 4px; }
+    .comp-score { font-size: 13px; font-weight: 700; width: 36px; text-align: right; }
+
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 13px;
+      color: #94a3b8;
+      border-top: 1px solid #e2e8f0;
+    }
+    footer strong { color: #475569; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Auditoria SEO — Março 2026</div>
+  <h1>LBorborrachas.com.br</h1>
+  <p>Análise completa de SEO + Comparativo com concorrentes</p>
+</header>
+
+<div class="container">
+
+  <!-- Score geral -->
+  <div class="score-card">
+    <div class="score-circle"><span>39</span></div>
+    <div class="score-info">
+      <h2>Score SEO atual: 39/100</h2>
+      <p>O site apresenta problemas técnicos críticos que limitam a visibilidade nos buscadores. Com as correções do plano de ação, a projeção é atingir <strong>71–79 pontos</strong> em 3 meses.</p>
+      <span class="proj">↑ Projeção: 71–79/100 em 90 dias</span>
+    </div>
+  </div>
+
+  <!-- Downloads -->
+  <p class="section-title">Relatórios para download</p>
+  <div class="cards">
+    <a class="card pdf" href="AUDITORIA-SEO-LBORBORRACHAS.pdf" target="_blank">
+      <div class="card-icon">📋</div>
+      <h3>Auditoria SEO Completa</h3>
+      <p>Análise detalhada em 10 categorias: técnico, conteúdo, schema, performance, imagens, SEO local e mais.</p>
+      <span class="tag">PDF · Baixar</span>
+    </a>
+    <a class="card pdf" href="COMPARATIVO-CONCORRENTES-LBOR.pdf" target="_blank">
+      <div class="card-icon">📊</div>
+      <h3>Comparativo Concorrentes</h3>
+      <p>LBOR vs Elastim, Cambuci, Roma Borracha e UNITEC — pontos fortes, lacunas e plano para superar.</p>
+      <span class="tag">PDF · Baixar</span>
+    </a>
+  </div>
+
+  <!-- Issues críticos -->
+  <p class="section-title">Top 5 problemas críticos</p>
+  <div class="issues">
+    <div class="issue-item">
+      <div class="issue-dot crit"></div>
+      <div class="issue-text"><strong>Stack tecnológica obsoleta</strong>AngularJS 1.6 (EOL) + PHP 7.4 (EOL) — risco de segurança e incompatibilidade com crawlers modernos.</div>
+    </div>
+    <div class="issue-item">
+      <div class="issue-dot crit"></div>
+      <div class="issue-text"><strong>Schema.org ausente</strong>Nenhum dado estruturado implementado — zero chance de rich snippets no Google.</div>
+    </div>
+    <div class="issue-item">
+      <div class="issue-dot crit"></div>
+      <div class="issue-text"><strong>Conteúdo E-E-A-T fraco</strong>Sem página Sobre, sem autores identificados, sem cases ou provas sociais.</div>
+    </div>
+    <div class="issue-item">
+      <div class="issue-dot high"></div>
+      <div class="issue-text"><strong>Core Web Vitals crítico</strong>LCP ~4–5s, INP ~300ms — abaixo do threshold do Google para ranking.</div>
+    </div>
+    <div class="issue-item">
+      <div class="issue-dot high"></div>
+      <div class="issue-text"><strong>Sem otimização para IA</strong>Nenhum llms.txt, sem acesso a ChatGPT/Perplexity bots — invisível nas buscas com IA.</div>
+    </div>
+  </div>
+
+  <!-- Ranking concorrentes -->
+  <p class="section-title">Ranking vs concorrentes</p>
+  <div class="competitors">
+    <div class="comp-row">
+      <span class="comp-name" style="color:#16a34a">Roma Borracha</span>
+      <div class="comp-bar-bg"><div class="comp-bar" style="width:67%;background:#16a34a"></div></div>
+      <span class="comp-score" style="color:#16a34a">67</span>
+    </div>
+    <div class="comp-row">
+      <span class="comp-name" style="color:#0891b2">Elastim</span>
+      <div class="comp-bar-bg"><div class="comp-bar" style="width:48%;background:#0891b2"></div></div>
+      <span class="comp-score" style="color:#0891b2">48</span>
+    </div>
+    <div class="comp-row">
+      <span class="comp-name" style="color:#d97706">UNITEC</span>
+      <div class="comp-bar-bg"><div class="comp-bar" style="width:45%;background:#d97706"></div></div>
+      <span class="comp-score" style="color:#d97706">45</span>
+    </div>
+    <div class="comp-row">
+      <span class="comp-name" style="color:#2563eb;font-weight:800">LBOR ★</span>
+      <div class="comp-bar-bg"><div class="comp-bar" style="width:39%;background:#2563eb"></div></div>
+      <span class="comp-score" style="color:#2563eb">39</span>
+    </div>
+    <div class="comp-row">
+      <span class="comp-name" style="color:#7c3aed">Cambuci</span>
+      <div class="comp-bar-bg"><div class="comp-bar" style="width:36%;background:#7c3aed"></div></div>
+      <span class="comp-score" style="color:#7c3aed">36</span>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Relatório gerado em <strong>março de 2026</strong> · Análise SEO profissional
+</footer>
+
+</body>
+</html>
